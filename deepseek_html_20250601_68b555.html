@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"/>
+<title>Карта навичок CRMiUM Developer</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+        --primary-color: #357eea;
+        --secondary-color: #1cc88a;
+        --dark-color: #2F3C54;
+        --light-color: #f8f9fc;
+        --danger-color: #e74a3b;
+        --warning-color: #f6c23e;
+        --info-color: #36b9cc;
+    }
+
+    body {
+        background-color: #f5f7fa;
+        font-family: 'Roboto', sans-serif;
+        padding: 20px;
+        color: #333;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #252b55, #3f496d);
+        color: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .header h2 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 28px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .table-container {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .table-responsive {
+        border-radius: 12px;
+    }
+
+    table {
+        font-size: 14px;
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle !important;
+        padding: 12px 10px;
+        border: 1px solid #e3e6f0;
+    }
+
+    thead th {
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 2px solid #2a4b8d;
+    }
+
+    .section-header {
+        background-color: var(--dark-color) !important;
+        color: white !important;
+        font-weight: 600;
+        font-size: 15px;
+        text-align: left !important;
+    }
+
+    .section-header td {
+        background-color: var(--dark-color) !important;
+        color: white !important;
+        text-align: left !important;
+        padding-left: 20px !important;
+    }
+
+    .skill-name {
+        text-align: left;
+        padding-left: 20px !important;
+        font-weight: 500;
+        background-color: #fff;
+        position: sticky;
+        left: 0;
+        z-index: 2;
+    }
+
+    .level-col {
+        min-width: 80px;
+        max-width: 80px;
+    }
+
+    .level-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 5px;
+    }
+
+    .basic-level {
+        background-color: #6c757d;
+    }
+
+    .medium-level {
+        background-color: #17a2b8;
+    }
+
+    .high-level {
+        background-color: #28a745;
+    }
+
+    .expert-level {
+        background-color: #007bff;
+    }
+
+    .pre-expert-level {
+        background-color: #6610f2;
+    }
+
+    .deny-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: var(--danger-color);
+        border-radius: 50%;
+        color: white;
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgba(248, 249, 252, 0.5);
+    }
+
+    tr:hover {
+        background-color: rgba(78, 115, 223, 0.08);
+    }
+
+    .experience-row td {
+        font-weight: 500;
+        background-color: #f8f9fa;
+        color: #495057;
+    }
+
+    .role-description {
+        text-align: left;
+        font-size: 13px;
+        line-height: 1.4;
+        color: #495057;
+    }
+
+    @media (max-width: 992px) {
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .skill-name {
+            position: static;
+        }
+    }
+
+    @media (max-width: 768px) {
+        th, td {
+            padding: 8px 6px;
+            font-size: 13px;
+        }
+        
+        .level-col {
+            min-width: 70px;
+            max-width: 70px;
+        }
+        
+        .header h2 {
+            font-size: 22px;
+        }
+    }
+
+    .position-row td {
+        font-weight: 600;
+        background-color: #e9ecef;
+    }
+
+    .yes-badge {
+        background-color: var(--secondary-color);
+        padding: 4px 8px;
+        border-radius: 4px;
+        color: white;
+        font-weight: 500;
+        font-size: 13px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h2>Карта навичок CRMiUM Developer</h2>
+</div>
+<div class="table-container">
+<div class="table-responsive">
+<table class="table table-bordered">
+<tbody>
+<!-- Position Row -->
+<tr class="position-row">
+<td>Позиція</td>
+<td>Trainee</td>
+<td>Junior</td>
+<td>Upper Junior</td>
+<td>Pre-Middle</td>
+<td>Middle</td>
+<td>Strong Middle</td>
+<td>Senior</td>
+<td>TL</td>
+</tr>
+<!-- Role Description -->
+<tr>
+<td>Роль CRMiUM Dev</td>
+<td class="role-description">Виконання базових завдань, вивчення основних технологій, допомога команді у простих завданнях</td>
+<td class="role-description">Виконання завдань під контролем наставника. Вивчення документації та існуючого коду. Написання Deluge скриптів. Використання Zoho CRM API.</td>
+<td class="role-description">Виконання самостійних та більш складних завдань. Розширене використання Deluge, Client Scripts. Робота з API та обробка даних.</td>
+<td class="role-description">Створення складних Deluge сценаріїв, Client Scripts, Widgets. Пошук та застосування найефективніших рішень для задач розробки та інтеграцій.</td>
+<td class="role-description">Створення складних та оптимізованих Deluge скриптів, Client Scripts, Widgets. Інтеграція з різними продуктами Zoho. Розробка архітектури додатків.</td>
+<td class="role-description">Ведення складних проектів, консалтинг. Проектування та реалізація комплексних інтеграцій. Впровадження найкращих практик.</td>
+<td class="role-description">Архітектурне проектування та оптимізація складних систем. Створення масштабованих Deluge сценаріїв. Використання сучасних патернів проектування.</td>
+<td class="role-description">Лідерство та управління командою розробників. Проектування архітектури на високому рівні. Управління великими проектами та інтеграціями.</td>
+</tr>
+<!-- Skills Map Header -->
+<!-- ZOHO Development Skills -->
+<tr class="section-header"><td colspan="9">1. ZOHO Development</td></tr>
+<tr>
+<td class="skill-name">1.1 Deluge Script</td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">1.2 Client Script</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">1.3 Widgets Development</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge pre-expert-level">PRE-EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">1.4 Zoho Sigma</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">1.5 Zoho Catalyst</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+</tr>
+<!-- Common Development Section -->
+<tr class="section-header"><td colspan="9">2. Common Development</td></tr>
+<tr>
+<td class="skill-name">2.1 Програмування та алгоритмізація</td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">2.2 Front-End Розробка</td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">2.3 Back-End Розробка</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">2.4 API Integration</td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">2.5 Unit Testing (Widgets Only)</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">2.6 Data Bases</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<!-- CI/CD Section -->
+<tr class="section-header"><td colspan="9">3. CI/CD</td></tr>
+<tr>
+<td class="skill-name">3.1 Version Control Systems (GIT)</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">3.2 Continuous Integration (CI)</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">3.3 Continuous Deployment (CD)</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+</tr>
+<tr>
+<td class="skill-name">3.4 Infrastructure as Code (IaC)</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+</tr>
+<!-- ZOHO Products Section -->
+<tr class="section-header"><td colspan="9">4. ZOHO Products</td></tr>
+<tr>
+<td class="skill-name">4.1 Zoho CRM</td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">PRE-MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">4.2 Zoho Creator</td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">PRE-MEDIUM</span></td>
+<td><span class="level-badge medium-level">PRE-MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">4.3 Zoho Analytics</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+</tr>
+<tr>
+<td class="skill-name">4.5 Zoho Flow</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge medium-level">MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge expert-level">EXPERT</span></td>
+</tr>
+<tr>
+<td class="skill-name">4.6 Розуміння роботи інших продуктів ZOHO</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="level-badge basic-level">BASIC</span></td>
+<td><span class="level-badge medium-level">PRE-MEDIUM</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+<td><span class="level-badge high-level">HIGH</span></td>
+</tr>
+<!-- Consulting Section -->
+<tr class="section-header"><td colspan="9">5. Консалтинг і розвиток</td></tr>
+<tr>
+<td class="skill-name">5.1 Проведення Product Research</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="yes-badge">Yes</span></td>
+<td><span class="yes-badge">Yes</span></td>
+</tr>
+<tr>
+<td class="skill-name">5.2 Консалтинг для клієнта</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="yes-badge">Yes</span></td>
+<td><span class="yes-badge">Yes</span></td>
+<td><span class="yes-badge">Yes</span></td>
+<td><span class="yes-badge">Yes</span></td>
+<td><span class="yes-badge">Yes</span></td>
+</tr>
+<tr>
+<td class="skill-name">5.3 Розвиток команди (Mentor)</td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="deny-icon">✕</span></td>
+<td><span class="yes-badge">Yes</span></td>
+<td><span class="yes-badge">Yes</span></td>
+<td><span class="yes-badge">Yes</span></td>
+</tr>
+<!-- Experience Row -->
+<tr class="experience-row">
+<td>Приблизний досвід роботи</td>
+<td>0 m</td>
+<td>3 m - 6 m</td>
+<td>9 m - 1 year</td>
+<td>1 year - 2 years</td>
+<td>1 year - 2 years</td>
+<td>&gt; 2 years</td>
+<td>&gt; 2 years</td>
+<td>&gt; 2.5 years</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
