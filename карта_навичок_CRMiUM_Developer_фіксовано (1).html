@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="uk">
+<head>
+<meta charset="utf-8"/>
+<title>Карта навичок CRMiUM Developer</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+   :root {
+            --primary-color: #357eea;
+            --secondary-color: #1cc88a;
+            --dark-color: #5a5c69;
+            --light-color: #f8f9fc;
+            --danger-color: #e74a3b;
+            --warning-color: #f6c23e;
+            --info-color: #36b9cc;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #252b55, #3f496d);
+            color: white;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h2 {
+            margin: 0;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .table-wrapper {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        table {
+            font-size: 14px;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        th, td {
+            text-align: center;
+            vertical-align: middle !important;
+            padding: 12px 10px;
+        }
+
+        thead th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .section-header {
+            background-color: var(--dark-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .subsection-header {
+            background-color: #e9ecef;
+            font-weight: 600;
+        }
+
+        .skill-name {
+            text-align: left;
+            padding-left: 15px !important;
+        }
+
+        .material-col {
+            min-width: 120px;
+        }
+
+        .level-col {
+            min-width: 80px;
+            max-width: 80px;
+        }
+
+        .checkmark {
+            font-size: 1.25rem;
+        }
+
+        .checkmark.required {
+            color: var(--secondary-color);
+        }
+
+        .checkmark.not-required {
+            color: var(--danger-color);
+        }
+
+        .checkmark.partial {
+            color: var(--warning-color);
+        }
+
+        .btn-material {
+            margin: 3px 0;
+            font-size: 13px;
+            padding: 5px 10px;
+        }
+
+        .btn-primary-material {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-secondary-material {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary-material:hover {
+            background-color: #2e59d9;
+            border-color:#4f8ef9;
+        }
+
+        .btn-secondary-material:hover {
+            background-color: #17a673;
+            border-color:#4f8ef9;
+        }
+
+        .table-responsive {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table-bordered {
+            border: 1px solid #e3e6f0;
+        }
+
+        .table-bordered th, 
+        .table-bordered td {
+            border: 1px solid #e3e6f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(248, 249, 252, 0.5);
+        }
+
+        tr:hover {
+            background-color: rgba(78, 115, 223, 0.05);
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            background-color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                border: 0;
+            }
+
+            .level-col {
+                min-width: 60px;
+                max-width: 60px;
+            }
+
+            .material-col {
+                min-width: 100px;
+            }
+        }
+
+        /* Ensure material buttons stack vertically full width */
+        .btn-primary-material, .btn-secondary-material, .btn-info-material, .btn-success-material, .btn-danger-material, .btn-warning-material {
+            display: block;
+            width: 100%;
+            margin: 4px 0;
+        }
+
+.main-title{
+    font-weight:700;
+    text-align:center;
+    font-size:20px;
+    background-color:transparent;
+}
+.subtitle{
+    text-align:center;
+    font-weight:600;
+    background-color:transparent;
+}
+
+.container, .content, .wrapper {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+body{padding:24px 24px;}
+
+.knowledge-table{border-top:1px solid #E5E8F0;border-bottom:1px solid #E5E8F0;width:100%;border-collapse:collapse;width:100%;}
+.section-header{background-color:#303764 !important;}
+.checkmark{font-size:14px;line-height:1;}
+tbody tr:hover{background-color:#f3f6fc;}
+
+.section-header{color:rgba(255,255,255,0.95) !important;}
+.btn-primary-material:active{box-shadow:0 2px 4px rgba(0,0,0,.15) inset;}
+.knowledge-table th:first-child, .knowledge-table td:first-child{
+    position:sticky;
+    left:0;
+    background:#fff;
+    z-index:2;
+}
+.section-header.knowledge-table td:first-child{
+    background:#303764;
+    color:rgba(255,255,255,0.95);
+}
+
+.knowledge-table th, .knowledge-table td { padding:8px 12px; }
+.knowledge-table thead th{top:72px !important; position:sticky; top:0; background:#fff; z-index:5; }<style>
+.deny-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-color: #e74a3b;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: center;
+}
+</style>
+<style id="custom-btn-color">.btn-primary-material {
+    background-color: #579afa;
+    border-color: #579afa;
+    color: #fff;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: 600;
+    transition: opacity .15s ease-in-out;
+}
+.btn-primary-material:hover {
+    background-color: #579afa;
+    border-color: #579afa;
+    opacity: 0.9;
+    color: #fff;
+}
+</style><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/></head>
+<body>
+<div class="container">
+<div class="header">
+<h2>Карта навичок CRMiUM Developer</h2>
+</div>
+<div class="table-wrapper table-responsive">
+<table cellpadding="0" cellspacing="0" class="table table-bordered knowledge-table"><tbody><tr><td colspan="3" dir="ltr">Позиція</td><td colspan="2" dir="ltr">Trainee</td><td colspan="2">Junior</td><td colspan="2">Upper Junior</td><td colspan="2">Pre-Middle</td><td colspan="2">Middle</td><td colspan="2">Strong Middle</td><td colspan="2">Senior</td><td colspan="2">TL</td></tr><tr><td colspan="3" dir="ltr">Роль <span>CRMiUM Dev</span></td><td colspan="2" dir="ltr">Виконання базових завдань,<br/>вивчення основних технологій,<br/>допомога команді у простих завданнях</td><td colspan="2" dir="ltr">Виконання завдань під контролем наставника<br/>Вивчення документації та існуючого коду<br/> Написання Deluge скриптів<br/>Використання Zoho CRM API<br/>Робота з клієнтськими скриптами<br/>Інтеграція з іншими продуктами Zoho<br/>Основи тестування (юніт-тести)</td><td colspan="2" dir="ltr">Виконання самостійних та більш складних завдань<br/>Розширене використання Deluge, Client Scripts<br/> Робота з API та обробка даних<br/>Створення інтерактивних віджетів<br/> Оптимізація продуктивності скриптів<br/> Інтеграція з зовнішніми сервісами<br/> Написання та виконання юніт-тестів<br/>Взаємодія з іншими членами команди для вирішення завдань</td><td colspan="2" dir="ltr">Створення складних Deluge сценаріїв, Client Scripts, Widgets<br/>Пошук та застосування найефективніших (найоптимальніших) рішень для задач розробки та інтеграцій<br/>Оптимізація та налагодження існуючого коду<br/>Підтримка інтеграцій з іншими продуктами та сервісами<br/>Використання TypeScript (Widgets, BackEnd)<br/>Використання сучасних інструментів для розробки</td><td colspan="2" dir="ltr"><br/>Створення складних та оптимізованих Deluge скриптів, Client Scripts, Widgets<br/>Пошук та застосування найефективніших (найоптимальніших) рішень для задач розробки та інтеграцій<br/>Інтеграція з різними продуктами Zoho<br/> Створення та оптимізація складних віджетів<br/>Використання сучасних інструментів для розробки<br/>Налагодження та моніторинг продуктивності<br/>Розробка архітектури додатків (Widgets)<br/>Робота з клієнтами для визначення вимог та розробки специфікацій</td><td colspan="2" dir="ltr">Ведення складних проектів, консалтинг<br/>Проектування та реалізація комплексних інтеграцій<br/>Впровадження найкращих практик та патернів проектування</td><td colspan="2" dir="ltr">Архітектурне проектування та оптимізація складних систем<br/> Створення масштабованих Deluge сценаріїв<br/>Використання сучасних патернів проектування<br/> Розробка та підтримка великих інтегрованих рішень<br/> Впровадження розширених технік тестування<br/> Використання та налаштування інструментів для моніторингу та логування<br/>Наставництво молодших розробників та ревізія коду</td><td colspan="2" dir="ltr">Лідерство та управління командою розробників<br/>Проектування архітектури на високому рівні<br/> Управління великими проектами та інтеграціями<br/>Впровадження та контроль за дотриманням найкращих практик<br/>Координація процесів CI/CD та DevOps<br/> Залучення до стратегічного планування та розробки<br/>Розвиток проектів та команди<br/>Забезпечення ефективної співпраці з іншими відділами<br/>Наставництво молодших розробників, ревізія коду</td></tr><tr></tr><tr><td colspan="2" rowspan="30">Карта <br/>навичок</td><td dir="ltr">1. ZOHO Development</td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td></tr><tr><td dir="ltr">1.1 Deluge Script</td><td colspan="2" dir="ltr">BASIC LEVEL        </td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">1.2 Client Script</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">1.3 Widgets Development</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">PRE EXPERT LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">1.4 Zoho Sigma</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">1.5 Zoho Catalyst</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td></tr><tr class="section-header"><td dir="ltr">2. Common Development</td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td></tr><tr><td dir="ltr">2.1 Програмування та алгоритмізація</td><td colspan="2" dir="ltr">BASIC LEVEL        </td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">2.2 Front-End Розробка</td><td colspan="2" dir="ltr">BASIC LEVEL        </td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">2.3 Back-End Розробка</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">2.4 API Integration</td><td colspan="2" dir="ltr">BASIC LEVEL        </td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">2.5 Unit Testing (Widgets Only)</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">2.6. Data Bases</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr class="section-header"><td dir="ltr">3. CI/CD</td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td></tr><tr><td dir="ltr">3.1 Version Control Systems (GIT)</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">3.2 Continuous Integration (CI)</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">3.3 Continuous Deployment (CD)</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td></tr><tr><td dir="ltr">3.4 Infrastructure as Code (IaC)</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td></tr><tr class="section-header"><td dir="ltr">4. ZOHO Products</td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td></tr><tr><td dir="ltr">4.1 Zoho CRM</td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">PRE MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">4.2 Zoho Creator</td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">PRE MEDIUM LEVEL</td><td colspan="2" dir="ltr">PRE MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">4.3 Zoho Analytics</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td></tr><tr><td dir="ltr">4.5 Zoho Flow</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">EXPERT</td></tr><tr><td dir="ltr">4.6 Розуміння роботи інших продуктів ZOHO</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">BASIC LEVEL</td><td colspan="2" dir="ltr">PRE MEDIUM LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td><td colspan="2" dir="ltr">HIGH LEVEL</td></tr><tr class="section-header"><td dir="ltr">5. Консалтинг і розвиток</td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td><td colspan="2" dir="ltr"></td></tr><tr><td dir="ltr">5.1 Проведення Product Research</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">Yes</td><td colspan="2" dir="ltr">Yes</td></tr><tr><td dir="ltr">5.2 Консалтинг для клієнта</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">Yes</td><td colspan="2" dir="ltr">Yes</td><td colspan="2" dir="ltr">Yes</td><td colspan="2" dir="ltr">Yes</td><td colspan="2" dir="ltr">Yes</td></tr><tr><td dir="ltr">5.3 Розвиток команди (Mentor)</td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr"><span class="deny-icon">×</span></td><td colspan="2" dir="ltr">Yes</td><td colspan="2" dir="ltr">Yes</td><td colspan="2" dir="ltr">Yes</td></tr>
+<tr>
+<td>Приблизний досвід роботи</td>
+<td colspan="2">0 m</td>
+<td colspan="2">3 m - 6 m</td>
+<td colspan="2">9 m - 1 year</td>
+<td colspan="2">1 year - 2 years</td>
+<td colspan="2">1 year - 2 years</td>
+<td colspan="2">&gt; 2 years</td>
+<td colspan="2">&gt; 2 years</td>
+<td colspan="2">&gt; 2.5 years</td></tr>
+</tbody></table>
+</div>
+</div>
+</body>
+</html>
