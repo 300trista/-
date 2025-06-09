@@ -5,104 +5,93 @@
     <title>Карта навичок CRMiUM Developer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
-        body {
-            background: #fff;
-            color: #232323;
-            font-family: "Roboto", Arial, sans-serif;
-            margin: 0;
-            padding: 24px;
-        }
-        .header {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 28px;
-            color: #323232;
-            letter-spacing: 0.5px;
-        }
-        .table-container {
-            max-width: 1280px;
-            margin: auto;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 13px;
-            background: #fff;
-        }
-        th, td {
-            border: 1px solid #e4e6eb;
-            padding: 8px 10px;
-            text-align: center;
-        }
-        th {
-            background: #f5f7fa;
-            color: #212529;
-            font-weight: 600;
-        }
-        .section-header td {
-            background: #eef1f6;
-            color: #375488;
-            text-align: left;
-            font-weight: 600;
-            font-size: 13px;
-            letter-spacing: 0.3px;
-            border-top: 2px solid #e4e6eb;
-        }
-        .position-row td {
-            background: #f5f7fa;
-            color: #212529;
-            font-weight: 600;
-        }
-        .experience-row td {
-            background: #f5f7fa;
-            color: #212529;
-            font-weight: 500;
-        }
-        .role-description {
-            text-align: left;
-            font-size: 12px;
-            color: #353535;
-            background: #fff;
-        }
-        .skill-name {
-            text-align: left;
-            font-weight: 500;
-            background: #fff;
-        }
-        .level-badge {
-            display: inline-block;
-            min-width: 60px;
-            border-radius: 4px;
-            padding: 2px 8px;
-            background: #f0f1f3;
-            color: #323232;
-            font-weight: 600;
-            font-size: 12px;
-            letter-spacing: 0.2px;
-        }
-        .yes-badge {
-            background: #e8f6ea;
-            color: #34a853;
-            border-radius: 4px;
-            padding: 2px 8px;
-            font-weight: 500;
-            font-size: 12px;
-            border: 1px solid #b8e6c6;
-        }
-        .deny-icon {
-            color: #d1d1d1;
-            font-size: 15px;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-        }
-        tr:nth-child(even) td:not(.section-header td) {
-            background: #fafbfc;
-        }
-        @media (max-width: 900px) {
-            .header { font-size: 18px; }
-            table { font-size: 12px; }
-            th, td { padding: 6px 4px; }
-        }
+       /* ==========  ZOHO-PEOPLE GAMMA  ========== */
+:root{
+  --nav-blue:#1c2b5d;
+  --nav-blue-light:#33447b;
+  --accent-blue:#2f80ed;
+  --accent-green:#1ec773;
+  --accent-red:#e64c3c;
+  --table-border:#e5e8f0;
+  --row-bg:#f7f9fc;
+  --text-dark:#212529;
+  --text-light:#fff;
+}
+
+/* шапка — такой же градиент, как в Zoho People */
+.header{
+  background:linear-gradient(135deg,var(--nav-blue) 0%,var(--nav-blue-light) 100%);
+  color:var(--text-light);
+  border-radius:6px;
+  padding:25px;
+  margin-bottom:30px;
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
+}
+
+/* заголовок таблицы + «слои»-разделители */
+thead th{
+  background:var(--accent-blue);
+  color:#fff;
+}
+
+/* тёмные секции («1. ZOHO Development») */
+.section-header{
+  background:var(--nav-blue) !important;
+  color:#fff !important;
+  font-weight:600;
+}
+
+/* зебра-фон строк и рамки */
+tbody tr:nth-child(even){background:var(--row-bg);}
+table,th,td{border:1px solid var(--table-border);}
+
+/* бейджи уровней */
+.level-badge{
+  display:inline-block;
+  border-radius:20px;
+  padding:3px 10px;
+  font-size:11px;
+  font-weight:600;
+  color:#fff;
+}
+.level-badge[data-level="BASIC"]      {background:#8e8e8e;}
+.level-badge[data-level="MEDIUM"]     {background:var(--accent-blue);}
+.level-badge[data-level="HIGH"]       {background:var(--accent-green);}
+.level-badge[data-level="PRE-EXPERT"] {background:#00b0ff;}
+.level-badge[data-level="EXPERT"]     {background:var(--nav-blue);}
+
+/* чек-иконки ✔ / ✖ */
+.checkmark.required{color:var(--accent-green);font-size:18px;}
+.checkmark.not-required{color:var(--accent-red);font-size:18px;}
+
+/* кнопки-материалы */
+.btn-primary-material{
+  background:var(--accent-blue);
+  border-color:var(--accent-blue);
+  color:#fff;
+  border-radius:6px;
+  padding:6px 14px;
+  font-weight:600;
+  transition:opacity .15s ease-in-out;
+  display:block;             /* полная ширина ячейки */
+  width:100%;
+  margin:4px 0;
+}
+.btn-primary-material:hover{opacity:.9;}
+
+/* фиксированная верхняя строка при прокрутке */
+thead th{position:sticky;top:0;z-index:10;}
+
+/* не забываем про «липкое» название навыка слева */
+.skill-name{
+  position:sticky;
+  left:0;
+  background:#fff;
+  text-align:left;
+  padding-left:12px!important;
+  z-index:9;
+}
+.section-header .skill-name{background:var(--nav-blue);color:#fff;}
     </style>
 </head>
 <body>
