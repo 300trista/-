@@ -91,12 +91,12 @@ tbody tr:nth-child(even){background:var(--row-bg);}
   font-weight:600;
   color:#fff;
 }
-.level-badge[data-level="BASIC"]      {background:#8e8e8e;}
-.level-badge[data-level="PRE-MEDIUM"] {background:#5e9dfd;}
-.level-badge[data-level="MEDIUM"]     {background:var(--accent-blue);}
-.level-badge[data-level="HIGH"]       {background:var(--accent-green);}
+.level-badge[data-level="BASIC"]      {background:#2ecc71;}
+.level-badge[data-level="PRE-MEDIUM"] {background:#8bc34a;}
+.level-badge[data-level="MEDIUM"]     {background:#f1c40f;}
+.level-badge[data-level="HIGH"]       {background:#ff9800;}
 .level-badge[data-level="PRE-EXPERT"] {background:#00b0ff;}
-.level-badge[data-level="EXPERT"]     {background:var(--nav-blue);}
+.level-badge[data-level="EXPERT"]     {background:#f44336;}
 
 /* ---------- чек / крест ---------- */
 .checkmark.required{color:var(--accent-green);font-size:18px;}
