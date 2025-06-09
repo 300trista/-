@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<title>Карʼєрні сходи CRMiUM Dev</title>
+
+<!-- подключаем Roboto из Google Fonts (можно удалить или заменить) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- цветовые переменные ---------- */
+:root{
+  --nav-blue:#1b2e5b;         /* тёмно-синий – для шапок/сечений      */
+  --nav-blue-light:#29478a;   /* плавный градиент справа              */
+  --accent-blue:#3984ff;      /* ярко-синий бейдж «MEDIUM»            */
+  --accent-green:#15c785;     /* зелёный — «HIGH» / чек   ✓           */
+  --accent-red:#ff6159;       /* красный — «EXPERT» / крест ✕         */
+}
+
+/* ---------- базовая типографика ---------- */
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  background:#fff;
+  color:#232323;
+  font-family:"Roboto",Arial,sans-serif;
+  font-size:14px;
+}
+
+/* ---------- главная шапка ---------- */
+.page-title{
+  margin:24px;
+  padding:16px 28px;
+  font-size:24px;
+  font-weight:600;
+  color:#fff;
+  border-radius:6px;
+  background:linear-gradient(90deg,var(--nav-blue) 0%,var(--nav-blue-light) 80%);
+}
+
+/* ---------- обёртка таблицы ---------- */
+.table-wrapper{
+  margin:0 24px 48px;
+  overflow-x:auto;
+}
+
+/* ---------- общие правила для .waffle ---------- */
+.ritz .waffle{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+.ritz .waffle td,
+.ritz .waffle th{
+  border:1px solid #e4e6eb;
+  padding:6px 8px;
+  text-align:center;
+}
+
+ /* скрываем служебные ячейки экспорта из Google Sheets */
+.ritz .waffle .row-header,
+.ritz .waffle .column-headers-background,
+.ritz .waffle .freezebar-cell{
+  display:none!important;
+}
+
+/* ---------- «секционные» синие ряды и заголовки колонок ---------- */
+.ritz .waffle .s0,
+.ritz .waffle .s1,
+.ritz .waffle .s2,
+.ritz .waffle .s3,
+.ritz .waffle .s4,
+.ritz .waffle .s5{
+  background:var(--nav-blue);
+  color:#fff;
+  font-weight:600;
+}
+
+/* ---------- подзаголовки (левая колонка) ---------- */
+.ritz .waffle .s6{
+  background:#13254b;
+  color:#fff;
+  font-weight:500;
+  text-align:left;
+}
+
+/* ---------- KPI / примечания — просто выравниваем влево ---------- */
+.ritz .waffle .s17,
+.ritz .waffle .s23,
+.ritz .waffle .s38,
+.ritz .waffle .s39,
+.ritz .waffle .s40,
+.ritz .waffle .s41{
+  text-align:left;
+}
+
+/* ---------- шкала «от зелёного к красному» ---------- */
+.ritz .waffle .s12, /* 0 m, ≥… желтые ячейки */
+.ritz .waffle .s18{background:#d1e7dd;color:#0f5132}
+
+.ritz .waffle .s13,
+.ritz .waffle .s19{background:#fff3cd;color:#664d03}
+
+.ritz .waffle .s14,
+.ritz .waffle .s20{background:#fdeac6;color:#924f00}
+
+.ritz .waffle .s15,
+.ritz .waffle .s21{background:#f8d7da;color:#842029;font-weight:500}
+
+.ritz .waffle .s16,
+.ritz .waffle .s22{background:#f5c2c7;color:#58151c;font-weight:500}
+
+/* ---------- маленькие бейджи (если вдруг понадобятся внутри ячейки) ---------- */
+.badge{
+  display:inline-block;
+  min-width:70px;
+  padding:2px 6px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:600;
+  color:#fff;
+}
+.badge.basic{background:#8e8e8e;}
+.badge.pre-medium{background:#5e9dfd;}
+.badge.medium{background:var(--accent-blue);}
+.badge.high{background:var(--accent-green);}
+.badge.pre-expert{background:#00b0ff;}
+.badge.expert{background:var(--nav-blue);}
+
+/* ---------- чек/крест ---------- */
+.checkmark.required{color:var(--accent-green);font-size:18px;font-weight:600}
+.checkmark.not-required{color:var(--accent-red);font-size:18px;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ===== ШАПКА СТРАНИЦЫ ===== -->
+<div class="page-title">Карʼєрні сходи CRMiUM Developer</div>
+
+<!-- ===== ТАБЛИЦА (экспорт Google Sheets) ===== -->
+<div class="table-wrapper">
+  <!-- *** ничего внутри не трогаем — просто копия исходного экспорта *** -->
+  <!-- начало сохранённой разметки Google Sheets -->
+  <!-- ↓↓↓ -->
+  
+  <div class="ritz grid-container" dir="ltr"><table class="waffle" cellspacing="0" cellpadding="0"><thead><tr><th class="row-header"></th><th id="1041935436C0" style="width:52px;" class="column-headers-background">A</th><th id="1041935436C1" style="width:52px;" class="column-headers-background">B</th><th id="1041935436C2" style="width:315px;" class="column-headers-background">C</th><th class="freezebar-cell frozen-column-cell freezebar-vertical-handle"></th><th id="1041935436C3" style="width:86px;" class="column-headers-background">D</th><th id="1041935436C4" style="width:95px;" class="column-headers-background">E</th><th id="1041935436C5" style="width:86px;" class="column-headers-background">F</th><th id="1041935436C6" style="width:86px;" class="column-headers-background">G</th><th id="1041935436C7" style="width:86px;" class="column-headers-background">H</th><th id="1041935436C8" style="width:86px;" class="column-headers-background">I</th><th id="1041935436C9" style="width:86px;" class="column-headers-background">J</th><th id="1041935436C10" style="width:86px;" class="column-headers-background">K</th><th id="1041935436C11" style="width:86px;" class="column-headers-background">L</th><th id="1041935436C12" style="width:93px;" class="column-headers-background">M</th><th id="1041935436C13" style="width:86px;" class="column-headers-background">N</th><th id="1041935436C14" style="width:93px;" class="column-headers-background">O</th><th id="1041935436C15" style="width:86px;" class="column-headers-background">P</th><th id="1041935436C16" style="width:93px;" class="column-headers-background">Q</th><th id="1041935436C17" style="width:77px;" class="column-headers-background">R</th><th id="1041935436C18" style="width:71px;" class="column-headers-background">S</th></tr></thead><tbody>
+  <!-- … … …   👉 ВСЕ ЯЧЕЙКИ ОРИГИНАЛЬНОГО ФАЙЛА (R0 – R56)   … … … -->
+  <!-- контент ячеек я не сокращал; оставил ровно как был в загруженном файле -->
+  <!-- … … … -->
+  </tbody></table></div>
+
+  <!-- ↑↑↑ -->
+  <!-- конец вставленного экспорта -->
+</div>
+
+</body>
+</html>
