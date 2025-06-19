@@ -1,0 +1,3399 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8"/>
+    <title>Карта знань CRMiUM Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    
+    <!-- Font Awesome для иконок -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    
+    <style>
+        /* ========== CSS ПЕРЕМЕННЫЕ ========== */
+        :root {
+            /* Основные цвета */
+            --primary-color: #2E3B61;
+            --primary-gradient: linear-gradient(90deg, #2E3B61, #2E3B61);
+            --white: #ffffff;
+            --text-primary: #202124;
+            
+            /* Фоновые цвета */
+            --bg-body: #eef2f7;
+            --bg-card: #ffffff;
+            --bg-row-even: #fafbfc;
+            --bg-row-header: #e3f2fd;
+            --bg-subsection: #f1f4f8;
+            
+            /* Цвета для границ */
+            --border-color: #d6dbe3;
+            --border-card: rgba(0,0,0,.08);
+            
+            /* Цвета для галочек */
+            --check-required: #2ecc71;
+            --check-not-required: #e74a3b;
+            --check-partial: #f6c23e;
+            
+            /* Размеры */
+            --max-width: 1280px;
+            --border-radius: 8px;
+            
+            /* Отступы */
+            --padding-body: 32px 16px;
+            --padding-header: 20px 28px;
+            --padding-cell: 10px 8px;
+            
+            /* Шрифты */
+            --font-family: 'Inter', Arial, sans-serif;
+            --font-size-base: 14px;
+            --font-size-small: 13px;
+            --font-size-header: 24px;
+            --font-size-icon: 28px;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+        }
+
+        /* ========== БАЗОВЫЕ СТИЛИ ========== */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 16px 8px;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            line-height: 1.5;
+        }
+
+        /* ========== КОНТЕЙНЕР / КАРТОЧКА ========== */
+        .card {
+            max-width: 100%;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px var(--border-card);
+            overflow: hidden;
+        }
+
+        /* ========== ШАПКА ========== */
+        .card__header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: var(--padding-header);
+            background: var(--primary-gradient);
+            color: var(--white);
+        }
+
+        .card__header-icon {
+            font-size: var(--font-size-icon);
+        }
+
+        .card__header-title {
+            margin: 0;
+            font-size: var(--font-size-header);
+            font-weight: var(--font-weight-bold);
+            line-height: 1.2;
+        }
+
+        /* ========== ОБЕРТКА ТАБЛИЦЫ ========== */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        /* ========== ТАБЛИЦА ========== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--font-size-small);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: var(--padding-cell);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Липкие заголовки */
+        thead th {
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            z-index: 5;
+        }
+
+        /* Первая колонка липкая */
+        table th:first-child,
+        table td:first-child {
+            position: sticky;
+            left: 0;
+            background: var(--bg-card);
+            z-index: 2;
+        }
+
+        /* Заголовок раздела в первой колонке */
+        .section-header td:first-child {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        /* Подзаголовок в первой колонке */
+        .subsection-header td:first-child {
+            background: var(--bg-subsection);
+        }
+
+        /* ========== СТИЛИ СТРОК ========== */
+        /* Заголовки разделов */
+        .section-header td {
+            background: var(--primary-color);
+            color: var(--white);
+            font-weight: var(--font-weight-semibold);
+            text-align: left;
+            padding-left: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Подзаголовки */
+        .subsection-header td {
+            background: var(--bg-subsection);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        /* Первая колонка (название навыка) */
+        .skill-name {
+            text-align: left;
+            padding-left: 15px !important;
+            font-weight: var(--font-weight-medium);
+        }
+
+        /* Чередование строк */
+        tbody tr:nth-child(even):not(.section-header):not(.subsection-header) td {
+            background: var(--bg-row-even);
+        }
+
+        /* Hover эффект */
+        tbody tr:hover:not(.section-header):not(.subsection-header) {
+            background-color: rgba(46, 59, 97, 0.05);
+        }
+
+        /* ========== ГАЛОЧКИ ========== */
+        .checkmark {
+            font-size: 1.25rem;
+        }
+
+        .checkmark.required {
+            color: var(--check-required);
+        }
+
+        .checkmark.not-required {
+            color: var(--check-not-required);
+        }
+
+        .checkmark.partial {
+            color: var(--check-partial);
+        }
+
+        /* ========== КНОПКИ ========== */
+        .btn {
+            display: block;
+            width: 100%;
+            margin: 4px 0;
+            padding: 6px 14px;
+            background-color: #339DFF;
+            border: 1px solid #339DFF;
+            color: var(--white);
+            border-radius: 6px;
+            font-weight: var(--font-weight-semibold);
+            text-decoration: none;
+            transition: opacity 0.15s ease-in-out;
+            text-align: center;
+            font-size: var(--font-size-small);
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+            text-decoration: none;
+            color: var(--white);
+            background-color: #2B8AE6;
+            border-color: #2B8AE6;
+        }
+
+        .btn i {
+            margin-right: 4px;
+        }
+
+        /* ========== СПЕЦИАЛЬНЫЕ СТИЛИ ========== */
+        /* Главный заголовок таблицы */
+        .main-title {
+            font-weight: var(--font-weight-bold);
+            text-align: center;
+            font-size: 20px;
+            background-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-weight: var(--font-weight-semibold);
+            background-color: transparent;
+        }
+
+        /* Колонки */
+        .material-col {
+            min-width: 120px;
+        }
+
+        .level-col {
+            min-width: 80px;
+            max-width: 80px;
+        }
+
+        /* ========== АДАПТИВНОСТЬ ========== */
+        @media (max-width: 900px) {
+            body {
+                padding: 16px 4px;
+            }
+            
+            .card__header-title {
+                font-size: 20px;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+            }
+            
+            .level-col {
+                min-width: 60px;
+                max-width: 60px;
+            }
+            
+            .material-col {
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- HEADER -->
+    <div class="card__header">
+        <span class="card__header-icon"><i class="fas fa-map"></i></span>
+        <h1 class="card__header-title">Карта знань CRMiUM Developer</h1>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th class="skill-name">Що треба знати, щоб претендувати на позицію:</th>
+                    <th class="material-col">Інформація для вивчення:</th>
+                    <th class="level-col">Trainee</th>
+                    <th class="level-col">Junior</th>
+                    <th class="level-col">Upper Junior</th>
+                    <th class="level-col">Pre-Middle</th>
+                    <th class="level-col">Middle</th>
+                    <th class="level-col">Strong Middle</th>
+                    <th class="level-col">Senior</th>
+                    <th class="level-col">TL</th>
+                </tr>
+            </thead> 
+            <tbody>
+<!-- 1. Front End -->
+</td>
+</tr>
+<!-- 1.1 Основи програмування та алгоритмізації -->
+<tr class="subsection-header">
+<td class="skill-name">1.1 Основи програмування та алгоритмізації</td>
+<td>
+<a class="btn btn-primary-material" href="https://scratch.mit.edu/" target="_blank">
+<i class="fas fa-link"></i> Scratch
+</a>
+<a class="btn btn-primary-material" href="https://online.fliphtml5.com/nndfq/yoqq/#p=34" target="_blank">
+<i class="fas fa-link"></i> Підручник
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 1.2 Веб-технології -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">1.2 Веб-технології</td>
+</tr>
+<tr>
+<td class="skill-name">1.2.1 HTML</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/html/default.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.2.2 CSS</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/css/default.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.2.3 CSS препроцесори (Sass, LESS)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/sass/default.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://lesscss.org/" target="_blank">
+<i class="fas fa-link"></i> Lesscss
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.2.4 CSS фреймворки (Bootstrap, Tailwind, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/bootstrap/bootstrap_ver.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://tailwindcss.com/" target="_blank">
+<i class="fas fa-link"></i> Tailwindcss
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.2.5 Основи адаптивного дизайну</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/css/css_rwd_intro.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.2.6 CSS Flexbox та Grid</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/css/css3_flexbox.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/css/css_grid.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 1.3 JavaScript Basic -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">1.3 JavaScript Basic</td>
+</tr>
+<tr>
+<td class="skill-name">1.3.1 Змінні та типи даних</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_variables.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.2 Оператори</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_operators.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.3 Умовні конструкції</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_if_else.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.4 Функції</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_function_definition.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.5 Контекст виклику (this)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_this.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.6 Об'єкти</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_object_definition.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.7 Масиви</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_arrays.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.8 Асинхронне програмування (Promises,Async/Await, Fetch API)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_asynchronous.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.9 Робота з DOM</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_htmldom.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.10 Модулі (ES6, CommonJS)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_es5.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://nodejs.org/api/modules.html" target="_blank">
+<i class="fas fa-link"></i> Nodejs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.11 Events</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_htmldom_events.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.3.12 Всплиття та перехват</td>
+<td>
+<a class="btn btn-primary-material" href="https://maxello.gitbooks.io/js-note/content/16_dom_events/vsplitie_i_perehvat.html" target="_blank">
+<i class="fas fa-link"></i> Maxello
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 1.4 JavaScript Advanced -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">1.4 JavaScript Advanced</td>
+</tr>
+<tr>
+<td class="skill-name">1.4.1 Замикання (Closures)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_function_closures.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.2 Scope та Hoisting</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_hoisting.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_scope.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.3 Event Loop та асинхронність</td>
+<td>
+<a class="btn btn-primary-material" href="https://uk.javascript.info/event-loop" target="_blank">
+<i class="fas fa-link"></i> Uk
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.4 Патерни проектування</td>
+<td>
+<a class="btn btn-primary-material" href="https://devzone.org.ua/post/paterny-proektuvannia-u-suchasnomu-javascript" target="_blank">
+<i class="fas fa-link"></i> Devzone
+</a>
+<a class="btn btn-primary-material" href="https://senior.ua/articles/kiss-dry-solid-yagni--navscho-dotrimuvatis-principv-programuvannya" target="_blank">
+<i class="fas fa-link"></i> Senior
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.5 Робота з прототипами</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_object_prototypes.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.6 Контекст виконання (Execution Context)</td>
+<td>
+<a class="btn btn-primary-material" href="https://jsflow.org/docs/exec-context-fundamentals/" target="_blank">
+<i class="fas fa-link"></i> Jsflow
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.7 Memoization</td>
+<td>
+<a class="btn btn-primary-material" href="https://habr.com/ru/companies/ruvds/articles/332384/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.8 Функції вищого порядку</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.freecodecamp.org/news/higher-order-functions-in-javascript-explained/" target="_blank">
+<i class="fas fa-link"></i> Freecodecamp
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.9 Debouncing та Throttling</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.freecodecamp.org/ukrainian/news/debounce-yak-zatrymaty-vyklyk-funktsiyi-v-javascript-pryklad-js-es6/" target="_blank">
+<i class="fas fa-link"></i> Freecodecamp
+</a>
+<a class="btn btn-primary-material" href="https://dev.to/jeetvora331/throttling-in-javascript-easiest-explanation-1081" target="_blank">
+<i class="fas fa-link"></i> Dev
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.4.10 Currying</td>
+<td>
+<a class="btn btn-primary-material" href="https://javascript.info/currying-partials" target="_blank">
+<i class="fas fa-link"></i> Javascript
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 1.5 TypeScript -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">1.5 TypeScript</td>
+</tr>
+<tr>
+<td class="skill-name">1.5.1 Встановлення та налаштування</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/typescript/typescript_getstarted.php" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://www.typescriptlang.org/" target="_blank">
+<i class="fas fa-link"></i> Typescriptlang
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.5.2 Типи даних</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/typescript/typescript_simple_types.php" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.5.3 Інтерфейси</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/typescript/typescript_aliases_and_interfaces.php" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.5.4 Класи</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/typescript/typescript_classes.php" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.5.5 Модулі</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.typescriptlang.org/docs/handbook/2/modules.html" target="_blank">
+<i class="fas fa-link"></i> Typescriptlang
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.5.6 Функції та генерики</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/typescript/typescript_basic_generics.php" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.5.7 Інтеграція з JavaScript проектами</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.freecodecamp.org/news/how-to-add-typescript-to-a-javascript-project/" target="_blank">
+<i class="fas fa-link"></i> Freecodecamp
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.5.8 Типізація існуючого коду JS</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html" target="_blank">
+<i class="fas fa-link"></i> Typescriptlang
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.5.9 Використання деклараційних файлів (.d.ts)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html" target="_blank">
+<i class="fas fa-link"></i> Typescriptlang
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 1.6 React -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">1.6 React</td>
+</tr>
+<tr>
+<td class="skill-name">1.6.1 Створення компонентів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/react/react_getstarted.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://uk.legacy.reactjs.org/" target="_blank">
+<i class="fas fa-link"></i> Uk
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.6.2 Пропси та стан (props and state)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/react/react_props.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.6.3 Використання основних хуків (useState, useEffect)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/react/react_usestate.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/react/react_useeffect.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.6.4 Розширені хуки (useContext, useReducer, useRef)</td>
+<td>
+<a class="btn btn-primary-material" href="https://uk.legacy.reactjs.org/docs/hooks-reference.html" target="_blank">
+<i class="fas fa-link"></i> Uk
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.6.5 Створення власних хуків (custom hooks)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/react/react_customhooks.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.6.6 Використання state managers (Zustand|Mobx|Redux)</td>
+<td>
+<a class="btn btn-primary-material" href="https://habr.com/ru/articles/750716/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+<a class="btn btn-primary-material" href="https://mobx.js.org/about-this-documentation.html" target="_blank">
+<i class="fas fa-link"></i> Mobx
+</a>
+<a class="btn btn-primary-material" href="https://redux.js.org/" target="_blank">
+<i class="fas fa-link"></i> Redux
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">1.6.7 React query</td>
+<td>
+<a class="btn btn-primary-material" href="https://tanstack.com/query/latest/docs/framework/react/overview" target="_blank">
+<i class="fas fa-link"></i> Tanstack
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 2. Back End -->
+<tr class="section-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">2. Back End</td>
+</tr>
+<!-- 2.1 Принципи ООП -->
+<tr class="subsection-header">
+<td class="skill-name">2.1 Принципи ООП</td>
+<td>
+<a class="btn btn-primary-material" href="https://habr.com/ru/companies/ruvds/articles/665290/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 2.2 Основи мереж -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">2.2 Основи мереж</td>
+</tr>
+<tr>
+<td class="skill-name">2.2.1 Модель OSI та TCP/IP</td>
+<td>
+<a class="btn btn-primary-material" href="https://habr.com/ru/articles/820419/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+<a class="btn btn-primary-material" href="https://aws.amazon.com/ru/what-is/osi-model/" target="_blank">
+<i class="fas fa-link"></i> AWS
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.2.2 IP-адресація: IPv4 та IPv6, підмережі</td>
+<td>
+<a class="btn btn-primary-material" href="https://aws.amazon.com/ru/compare/the-difference-between-ipv4-and-ipv6/" target="_blank">
+<i class="fas fa-link"></i> AWS
+</a>
+<a class="btn btn-primary-material" href="https://help.keenetic.com/hc/uk/articles/213965829-%D0%9F%D1%80%D0%B8%D0%BA%D0%BB%D0%B0%D0%B4-%D1%80%D0%BE%D0%B7%D1%80%D0%B0%D1%85%D1%83%D0%BD%D0%BA%D1%83-%D0%BA%D1%96%D0%BB%D1%8C%D0%BA%D0%BE%D1%81%D1%82%D1%96-%D1%85%D0%BE%D1%81%D1%82%D1%96%D0%B2-%D1%82%D0%B0-%D0%BF%D1%96%D0%B4%D0%BC%D0%B5%D1%80%D0%B5%D0%B6-%D0%BD%D0%B0-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%96-IP-%D0%B0%D0%B4%D1%80%D0%B5%D1%81%D0%B8-%D1%82%D0%B0-%D0%BC%D0%B0%D1%81%D0%BA%D0%B8" target="_blank">
+<i class="fas fa-link"></i> Help
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.2.3 Протоколи: TCP, UDP, ICMP, HTTP, HTTPS,FTP, SMTP, DNS</td>
+<td>
+<a class="btn btn-primary-material" href="https://hyperhost.ua/info/uk/osnovni-protokoli-merezhi-navishcho-voni-vikoristovuyutsya" target="_blank">
+<i class="fas fa-link"></i> Hyperhost
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 2.3 HTTP та веб-технології -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">2.3 HTTP та веб-технології</td>
+</tr>
+<tr>
+<td class="skill-name">2.3.1 Протокол HTTP/HTTPS: Запити GET, POST,PUT, DELETE, PATCH</td>
+<td>
+<a class="btn btn-primary-material" href="https://habr.com/ru/articles/50147/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+<a class="btn btn-primary-material" href="https://w3schoolsua.github.io/tags/ref_httpmethods.html#gsc.tab=0" target="_blank">
+<i class="fas fa-link"></i> W3Schoolsua
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.3.2 Основи RESTful архітектури:Принципи REST, створення REST API</td>
+<td>
+<a class="btn btn-primary-material" href="https://foxminded.ua/shcho-take-rest-api/" target="_blank">
+<i class="fas fa-link"></i> Foxminded
+</a>
+<a class="btn btn-primary-material" href="https://ua.savtec.org/articles/coding/the-basics-of-rest-and-restful-api-development.html" target="_blank">
+<i class="fas fa-link"></i> Ua
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.3.3 Розуміння WebSockets або GraphQL</td>
+<td>
+<a class="btn btn-primary-material" href="https://learn.javascript.ru/websocket" target="_blank">
+<i class="fas fa-link"></i> Learn
+</a>
+<a class="btn btn-primary-material" href="https://graphql.org/" target="_blank">
+<i class="fas fa-link"></i> Graphql
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 2.4 Створення скриптів -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">2.4 Створення скриптів</td>
+</tr>
+<tr>
+<td class="skill-name">2.4.1 NodeJS (express.js|etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/nodejs/" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://expressjs.com/" target="_blank">
+<i class="fas fa-link"></i> Expressjs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.4.2 Python (Flask|Django|etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/python/python_getstarted.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/django/index.php" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://flask.palletsprojects.com/en/3.0.x/" target="_blank">
+<i class="fas fa-link"></i> Flask
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.4.3 PHP (Laravel | Symphony | etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/php/default.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://laravel.com/" target="_blank">
+<i class="fas fa-link"></i> Laravel
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 2.5 Хмарні платформи -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">2.5 Хмарні платформи</td>
+</tr>
+<tr>
+<td class="skill-name">2.5.1 AWS (EC2, S3, RDS, Lambda, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://docs.aws.amazon.com/" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.5.2 Google Cloud Platform</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.elastic.co/docs/current/en/integrations/gcp" target="_blank">
+<i class="fas fa-link"></i> Elastic
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.5.6 Microsoft Azure (VMs, Blob Storage,kubernetes, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://learn.microsoft.com/en-us/azure/?product=popular" target="_blank">
+<i class="fas fa-link"></i> Learn
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+</tr>
+<!-- 2.6 Контейнеризація та оркестрація -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">2.6 Контейнеризація та оркестрація</td>
+</tr>
+<tr>
+<td class="skill-name">2.6.1 Основи Docker</td>
+<td>
+<a class="btn btn-primary-material" href="https://docker-curriculum.com/" target="_blank">
+<i class="fas fa-link"></i> Docker-Curriculum
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.6.2 Docker Images</td>
+<td>
+<a class="btn btn-primary-material" href="https://docker-curriculum.com/" target="_blank">
+<i class="fas fa-link"></i> Docker-Curriculum
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.6.3 Docker Containers</td>
+<td>
+<a class="btn btn-primary-material" href="https://docker-curriculum.com/" target="_blank">
+<i class="fas fa-link"></i> Docker-Curriculum
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.6.4 Docker Volumes</td>
+<td>
+<a class="btn btn-primary-material" href="https://docker-curriculum.com/" target="_blank">
+<i class="fas fa-link"></i> Docker-Curriculum
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.6.5 Docker Networking</td>
+<td>
+<a class="btn btn-primary-material" href="https://docker-curriculum.com/" target="_blank">
+<i class="fas fa-link"></i> Docker-Curriculum
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.6.6 Docker Compose</td>
+<td>
+<a class="btn btn-primary-material" href="https://docker-curriculum.com/" target="_blank">
+<i class="fas fa-link"></i> Docker-Curriculum
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.6.7 Основи Kubernetes</td>
+<td>
+<a class="btn btn-primary-material" href="https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/" target="_blank">
+<i class="fas fa-link"></i> Kubernetes
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.6.8 Pods та Deployments</td>
+<td>
+<a class="btn btn-primary-material" href="https://kubernetes.io/uk/docs/tutorials/kubernetes-basics/explore/explore-intro/" target="_blank">
+<i class="fas fa-link"></i> Kubernetes
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.6.9 Моніторинг та логування (Prometheus,Grafana, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://habr.com/ru/articles/766102/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 2.7 Безпека мереж -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">2.7 Безпека мереж</td>
+</tr>
+<tr>
+<td class="skill-name">2.7.1 Конфіденційність: Захист даних віднесанкціонованого доступу</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.microsoft.com/uk-ua/security/business/security-101/what-is-information-security-infosec" target="_blank">
+<i class="fas fa-link"></i> Microsoft
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.7.2 Цілісність: Захист даних віднесанкціонованих змін.</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/cybersecurity/index.php" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.7.3 Доступність: Забезпечення доступу доданих для авторизованих користувачів.</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/cybersecurity/index.php" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.7.4 Шифрування та SSL/TLS</td>
+<td>
+<a class="btn btn-primary-material" href="https://vps.ua/blog/ukr/ssl-tls-protocols-details/" target="_blank">
+<i class="fas fa-link"></i> Vps
+</a>
+<a class="btn btn-primary-material" href="https://tuthost.ua/uk/ssl/vpervye-s-ssl/" target="_blank">
+<i class="fas fa-link"></i> Tuthost
+</a>
+<a class="btn btn-primary-material" href="https://ssl.com.ua/blog/ukr/hashing-coding-encryption/" target="_blank">
+<i class="fas fa-link"></i> Ssl
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.7.5 Типи мережевих атак (розуміння)</td>
+<td>
+<a class="btn btn-primary-material" href="https://support.kaspersky.com/help/Kaspersky/Mac24_patchA/uk-UA/88075.htm" target="_blank">
+<i class="fas fa-link"></i> Support
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.7.6 Захист від мережевих атак (Cloudflare,AWS Shield, SSL/TLS, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://developers.cloudflare.com/fundamentals/" target="_blank">
+<i class="fas fa-link"></i> Developers
+</a>
+<a class="btn btn-primary-material" href="https://www.docs.inductiveautomation.com/docs/8.1/platform/gateway/config/web-server-settings/secure-communication-ssl-tls" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.7.7 Аутентифікація та авторизація</td>
+<td>
+<a class="btn btn-primary-material" href="https://training.qatestlab.com/blog/technical-articles/authentication-authorization-and-identification/" target="_blank">
+<i class="fas fa-link"></i> Training
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.7.8 Використання ELK Stack (Elasticsearch,Logstash, Kibana)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank">
+<i class="fas fa-link"></i> Elastic
+</a>
+<a class="btn btn-primary-material" href="https://www.elastic.co/guide/en/kibana/current/index.html" target="_blank">
+<i class="fas fa-link"></i> Elastic
+</a>
+<a class="btn btn-primary-material" href="https://www.elastic.co/guide/en/logstash/current/running-logstash-command-line.html" target="_blank">
+<i class="fas fa-link"></i> Elastic
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 2.8 IP телефонія -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">2.8 IP телефонія</td>
+</tr>
+<tr>
+<td class="skill-name">2.8.1 Розуміння принципів роботи SIP протоколу</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.cisco.com/en/US/docs/voice_ip_comm/cucm/admin/4_0_1/ccmsys/a08sip.html" target="_blank">
+<i class="fas fa-link"></i> Cisco
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.2 Налаштування SIP транків та внутрішніх номерів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.cisco.com/en/US/docs/voice_ip_comm/cucm/admin/4_0_1/ccmsys/a08sip.html" target="_blank">
+<i class="fas fa-link"></i> Cisco
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.3 Вирішення проблем з’єднання та якості дзвінків</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.cisco.com/en/US/docs/voice_ip_comm/cucm/admin/4_0_1/ccmsys/a08sip.html" target="_blank">
+<i class="fas fa-link"></i> Cisco
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.4 Розуміння VoIP</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.cisco.com/c/en/us/tech/voice/ip-telephony-voice-over-ip-voip/index.html" target="_blank">
+<i class="fas fa-link"></i> Cisco
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.5 Встановлення та базове налаштування Asterisk</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.asterisk.org/get-started/" target="_blank">
+<i class="fas fa-link"></i> Asterisk
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.6 Створення та налаштування конфігураційних файлів Asterisk</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.asterisk.org/get-started/" target="_blank">
+<i class="fas fa-link"></i> Asterisk
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.7 Управління дзвінками та внутрішніми номерами Asterisk</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.asterisk.org/get-started/" target="_blank">
+<i class="fas fa-link"></i> Asterisk
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.8 Використання Asterisk CLI для налагодження та управління</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.asterisk.org/get-started/" target="_blank">
+<i class="fas fa-link"></i> Asterisk
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.9 Налаштування Elastix</td>
+<td>
+<a class="btn btn-primary-material" href="https://elastix.dev/" target="_blank">
+<i class="fas fa-link"></i> Elastix
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.10 Підключення Asterisk та Elastix до Zoho (Zoho CRM та інші)</td>
+<td>
+<a class="btn btn-primary-material" href="https://help.zoho.com/portal/en/kb/desk/integrations-and-marketplace/telephony-and-sms/on-premise/articles/installing-asterisk-or-elastix-telephony-system-in-zoho-desk-2-9-2016" target="_blank">
+<i class="fas fa-link"></i> Help
+</a>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.11 Автоматизація збереження дзвінків та даних у CRM</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">2.8.12 Використання вебхуків та API для інтеграції</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 3. Data Bases -->
+<tr class="section-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">3. Data Bases</td>
+</tr>
+<!-- 3.1 Розуміння SQL -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">3.1 Розуміння SQL</td>
+</tr>
+<tr>
+<td class="skill-name">3.1.1 Вибірка даних (SELECT, DISTINCT, LIMIT, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/sql/sql_intro.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">3.1.2 Агрегаційні функції (COUNT, SUM, AVG, MIN, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/sql/sql_intro.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">3.1.3 Модифікація даних (INSERT, UPDATE, DELETE)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/sql/sql_intro.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">3.1.4 Створення та управління (таблиці, індекси,виділення та обмеження)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/sql/sql_create_db.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">3.1.5 Реляційні оператори (з'єднання таблиць,комбінування результатів)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/sql/sql_join.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">3.1.6 Підзапити та складні запити (підзапити, складні запити)</td>
+<td>
+<a class="btn btn-primary-material" href="https://elearning.sumdu.edu.ua/free_content/lectured:89b3d175c06a6b137e410cb14821d0e94549ad5a/20151013153156/44554/index.html" target="_blank">
+<i class="fas fa-link"></i> Elearning
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">3.1.7 Оптимізація та продуктивність</td>
+<td>
+<a class="btn btn-primary-material" href="https://javarush.com/ua/groups/posts/uk.292.kljhov-optimzac-sql-jsho-ne-zalezhatjh-vd-vartsno-model-chastina-1" target="_blank">
+<i class="fas fa-link"></i> Javarush
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 3.2 Розуміння роботи із PostgreSQL | MySQL | SQLite | etc -->
+<tr class="subsection-header">
+<td class="skill-name">3.2 Розуміння роботи із PostgreSQL | MySQL | SQLite | etc</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/mysql/mysql_sql.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://www.postgresql.org/" target="_blank">
+<i class="fas fa-link"></i> Postgresql
+</a>
+<a class="btn btn-primary-material" href="https://sqlite.org/" target="_blank">
+<i class="fas fa-link"></i> Sqlite
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 3.3 Розуміння роботи із phpMyAdmin | pgAdmin |MySQL Workbench | etc -->
+<tr class="subsection-header">
+<td class="skill-name">3.3 Розуміння роботи із phpMyAdmin | pgAdmin |MySQL Workbench | etc</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.phpmyadmin.net/docs/" target="_blank">
+<i class="fas fa-link"></i> Phpmyadmin
+</a>
+<a class="btn btn-primary-material" href="https://www.pgadmin.org/" target="_blank">
+<i class="fas fa-link"></i> Pgadmin
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 4. Common knowledge -->
+<tr class="section-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">4. Common knowledge</td>
+</tr>
+<!-- 4.1 JSON, XML -->
+<tr class="subsection-header">
+<td class="skill-name">4.1 JSON, XML</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/js/js_json.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/xml/default.asp" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 4.2 HTTP/HTTPS, REST API -->
+<tr class="subsection-header">
+<td class="skill-name">4.2 HTTP/HTTPS, REST API</td>
+<td>
+<a class="btn btn-primary-material" href="https://hyperhost.ua/info/uk/shho-take-https-u-comu-vidminnist-vid-http-navishho-potribnii" target="_blank">
+<i class="fas fa-link"></i> Hyperhost
+</a>
+<a class="btn btn-primary-material" href="https://habr.com/ru/articles/483202/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 4.3 Git та системи контролю версій -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">4.3 Git та системи контролю версій</td>
+</tr>
+<tr>
+<td class="skill-name">4.3.1 Основи Git</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/git/git_intro.asp?remote=github" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+<a class="btn btn-primary-material" href="https://www.git-scm.com/" target="_blank">
+<i class="fas fa-link"></i> Git-Scm
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">4.3.2 Взаємодія з GitHub | GitLab | Bitbucket</td>
+<td>
+<a class="btn btn-primary-material" href="https://docs.github.com/en/get-started/start-your-journey" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">4.3.3 Використання GitKraken, SourceTree, etc</td>
+<td>
+<a class="btn btn-primary-material" href="https://teleyah.com/cspro/EthiopiaSep2016/IntroGitSourceTree.pdf" target="_blank">
+<i class="fas fa-link"></i> Teleyah
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">4.3.4 Інтеграція Git з IDE (VSCode, IntelliJ IDEA, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.digitalocean.com/community/tutorials/how-to-use-git-integration-in-visual-studio-code-ru" target="_blank">
+<i class="fas fa-link"></i> Digitalocean
+</a>
+<a class="btn btn-primary-material" href="https://javarush.com/groups/posts/2818-podruzhim-git-s-intellij-idea" target="_blank">
+<i class="fas fa-link"></i> Javarush
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">4.3.5 Прийоми для вирішення конфліктів (git merge, git rebase)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.w3schools.com/git/git_branch_merge.asp?remote=github" target="_blank">
+<i class="fas fa-link"></i> W3Schools
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 5. Testing -->
+<tr class="section-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">5. Testing</td>
+</tr>
+<!-- 5.1 Використання Postman для тестування API -->
+<tr class="subsection-header">
+<td class="skill-name">5.1 Використання Postman для тестування API</td>
+<td>
+<a class="btn btn-primary-material" href="https://training.qatestlab.com/blog/technical-articles/use-postman-in-testing/" target="_blank">
+<i class="fas fa-link"></i> Training
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 5.2 Unit тестування (Jest, Cypress, etc) -->
+<tr class="subsection-header">
+<td class="skill-name">5.2 Unit тестування (Jest, Cypress, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://foxminded.ua/yunit-testy/" target="_blank">
+<i class="fas fa-link"></i> Foxminded
+</a>
+<a class="btn btn-primary-material" href="https://jestjs.io/docs/getting-started" target="_blank">
+<i class="fas fa-link"></i> Jestjs
+</a>
+<a class="btn btn-primary-material" href="https://docs.cypress.io/examples/tutorials" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 5.3 Інтеграційне тестування (Jest, Cypress, etc) -->
+<tr class="subsection-header">
+<td class="skill-name">5.3 Інтеграційне тестування (Jest, Cypress, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.zaptest.com/uk/%D1%89%D0%BE-%D1%82%D0%B0%D0%BA%D0%B5-%D1%96%D0%BD%D1%82%D0%B5%D0%B3%D1%80%D0%B0%D1%86%D1%96%D0%B9%D0%BD%D0%B5-%D1%82%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B3%D0%BB%D0%B8%D0%B1" target="_blank">
+<i class="fas fa-link"></i> Zaptest
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 5.4 E2E тестування (Cypress, Playwright, etc) -->
+<tr class="subsection-header">
+<td class="skill-name">5.4 E2E тестування (Cypress, Playwright, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://habr.com/ru/companies/otus/articles/681066/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 6. CI/CD -->
+<tr class="section-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">6. CI/CD</td>
+</tr>
+<!-- 6.1 Основи CI/CD -->
+<tr class="subsection-header">
+<td class="skill-name">6.1 Основи CI/CD</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.globallogic.com/ua/insights/blogs/ci-cd-for-js-devs-theory/" target="_blank">
+<i class="fas fa-link"></i> Globallogic
+</a>
+<a class="btn btn-primary-material" href="https://dou.ua/forums/topic/47081/" target="_blank">
+<i class="fas fa-link"></i> Dou
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 6.2 Інструменти для CI/CD (GitLab CI/CD | GitHub Actions | etc) -->
+<tr class="subsection-header">
+<td class="skill-name">6.2 Інструменти для CI/CD (GitLab CI/CD | GitHub Actions | etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://docs.github.com/en/actions/quickstart" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+<a class="btn btn-primary-material" href="https://docs.gitlab.com/ee/ci/pipelines/" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 6.3 Налаштування CI/CD пайплайнів -->
+<tr class="subsection-header">
+<td class="skill-name">6.3 Налаштування CI/CD пайплайнів</td>
+<td>
+<a class="btn btn-primary-material" href="https://habr.com/ru/articles/764568/" target="_blank">
+<i class="fas fa-link"></i> Habr
+</a>
+<a class="btn btn-primary-material" href="https://docs.gitlab.com/ee/ci/pipelines/" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 6.4 Автоматичне тестування та деплой додатків -->
+<tr class="subsection-header">
+<td class="skill-name">6.4 Автоматичне тестування та деплой додатків</td>
+<td>
+<a class="btn btn-primary-material" href="https://university.sigma.software/manual-testing-vs-automation-testing/" target="_blank">
+<i class="fas fa-link"></i> University
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 6.5 Моніторинг та логування у CI/CD (ELK Stack, Prometheus,Grafana -->
+<tr class="subsection-header">
+<td class="skill-name">6.5 Моніторинг та логування у CI/CD (ELK Stack, Prometheus,Grafana</td>
+<td>
+<a class="btn btn-primary-material" href="https://github.com/silveiralexf/monitoring-stack" target="_blank">
+<i class="fas fa-link"></i> GitHub
+</a>
+<a class="btn btn-primary-material" href="https://fastercapital.com/content/Pipeline-logging--How-to-log-your-pipeline-events-and-metrics-using-tools-like-ELK-and-Prometheus.html" target="_blank">
+<i class="fas fa-link"></i> Fastercapital
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 7. ZOHO Development -->
+<tr class="section-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">7. ZOHO Development</td>
+</tr>
+<!-- 7.1 Основи Deluge -->
+<tr class="subsection-header">
+<td class="skill-name">7.1 Основи Deluge</td>
+<td>
+<a class="btn btn-primary-material" href="https://deluge.zoho.com/learndeluge#Welcome!" target="_blank">
+<i class="fas fa-link"></i> Deluge
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/developer/help/scripting/language-basics.html" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 7.2 Deluge Advanced (RestAPI, CRM API, etc) -->
+<tr class="subsection-header">
+<td class="skill-name">7.2 Deluge Advanced (RestAPI, CRM API, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/developer/docs/api/v3/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/developer/docs/api/v6/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 7.3 COQL -->
+<tr class="subsection-header">
+<td class="skill-name">7.3 COQL</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/developer/docs/api/v3/Get-Records-through-COQL-Query.html" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 7.4 Client Scripts -->
+<tr class="subsection-header">
+<td class="skill-name">7.4 Client Scripts</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/developer/docs/client-script/overview.html" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 7.5 Інтеграції та автоматизація -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">7.5 Інтеграції та автоматизація</td>
+</tr>
+<tr>
+<td class="skill-name">7.5.1 Інтеграція з Zoho CRM, Zoho Creator, Zoho Books та іншими продуктами Zoho</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.5.2 Використання Zoho Flow</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.5.3 Використання веб-хуків для тригерів та інтеграцій</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.5.4 Налаштування правил робочого процесу (Workflow Rules)</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.5.5 Створення динамічних форм та полів у Zoho Creator</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.5.6 Використання Deluge для налаштування поведінки форм</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.5.7 Використання Deluge для створення складних звітівта дашбордів</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.5.8 Використання Deluge для створення інтеграцій між додатками</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 7.6 Zoho Widgets -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">7.6 Zoho Widgets</td>
+</tr>
+<tr>
+<td class="skill-name">7.6.1 Створення базових віджетів (HTML+CSS+JS)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/developer/docs/widgets/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.6.2 Створення віджетів Advanced (HTML+CSS+JS+ES5/6/7/8)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/developer/docs/widgets/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.6.3 Створення віджетів Advanced (HTML+CSS+React)</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.6.4 Створення віджетів Advanced (HTML+CSS+React+TS+Vite|WebPack)</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 7.7 Zoho Sigma -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">7.7 Zoho Sigma</td>
+</tr>
+<tr>
+<td class="skill-name">7.7.1 Загальне розуміння роботи</td>
+<td>
+<a class="btn btn-primary-material" href="https://help.zoho.com/portal/en/kb/sigma/general/articles/sigma-overview#Advantages_of_using_Sigma" target="_blank">
+<i class="fas fa-link"></i> Help
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.7.2 Розробка Deluge скриптів</td>
+<td>
+<a class="btn btn-primary-material" href="https://deluge.zoho.com/learndeluge#Welcome!" target="_blank">
+<i class="fas fa-link"></i> Deluge
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/developer/help/scripting/language-basics.html" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.7.3 Розробка повного додатку (структура, скрипти, інтеграція,віджети, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLlC7sQNISSUQIPOd0gE4l4gfGNYHE9Oc5" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 7.7 Zoho Catalyst -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">7.7 Zoho Catalyst</td>
+</tr>
+<tr>
+<td class="skill-name">7.7.1 Serverless</td>
+<td>
+<a class="btn btn-primary-material" href="https://docs.catalyst.zoho.com/en/getting-started/quick-start-guide/?src=header" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+<a class="btn btn-primary-material" href="https://docs.catalyst.zoho.com/en/serverless/getting-started/introduction/" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.7.2 Cloud Scale (Cache, CRON, Data Source, etc)</td>
+<td>
+<a class="btn btn-primary-material" href="https://docs.catalyst.zoho.com/en/cloud-scale/getting-started/introduction/" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.7.3 ZIA</td>
+<td>
+<a class="btn btn-primary-material" href="https://catalyst.zoho.com/zia-services.html" target="_blank">
+<i class="fas fa-link"></i> Catalyst
+</a>
+<a class="btn btn-primary-material" href="https://docs.catalyst.zoho.com/en/zia-services/" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.7.4 DevOps</td>
+<td>
+<a class="btn btn-primary-material" href="https://docs.catalyst.zoho.com/en/devops/getting-started/introduction/" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.7.5 QuickML</td>
+<td>
+<a class="btn btn-primary-material" href="https://catalyst.zoho.com/quickml.html" target="_blank">
+<i class="fas fa-link"></i> Catalyst
+</a>
+<a class="btn btn-primary-material" href="https://docs.catalyst.zoho.com/en/quickml/getting-started/introduction/" target="_blank">
+<i class="fas fa-link"></i> Docs
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">7.7.6 SmartBrowz</td>
+<td>
+<a class="btn btn-primary-material" href="https://catalyst.zoho.com/smartbrowz.html" target="_blank">
+<i class="fas fa-link"></i> Catalyst
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 8. ZOHO Products -->
+<tr class="section-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">8. ZOHO Products</td>
+</tr>
+<!-- 8.1 ZOHO CRM -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">8.1 ZOHO CRM</td>
+</tr>
+<tr>
+<td class="skill-name">8.1.1 Основи роботи з Zoho CRM</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.2 Створення та налаштування базових модулів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.3 Налаштування складних модулів і кастомізація полів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.4 Використання правил автоматизації та робочих процесів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.5 Інтеграція з іншими Zoho продуктами</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.6 Створення складних звітів та дашбордів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.7 Розробка складних сценаріїв автоматизації</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.8 Використання API для кастомізації та інтеграції</td>
+<td>
+<a class="btn btn-primary-material" href="https://telegra.ph/Kastomnye-funkcii-v-Zoho-03-03" target="_blank">
+<i class="fas fa-link"></i> Telegra
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.9 Розробка спеціалізованих модулів та розширень</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.10 Архітектура складних CRM-рішень</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.1.11 Використання передових функцій автоматизації та аналітики</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 8.2 ZOHO Creator -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">8.2 ZOHO Creator</td>
+</tr>
+<tr>
+<td class="skill-name">8.2.1 Основи роботи з Zoho Creator</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/watch?v=7BPdK9odMlE&amp;list=PLZQZebmrdF7jCbEKEtajtPTTjdSHIx7Qf&amp;index=1" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/creator/help/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.2.2 Створення простих форм і звітів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.2.3 Створення складніших додатків з використанням Deluge</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.2.4 Інтеграція з зовнішніми API</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.2.5 Налаштування правил робочих процесів і автоматизації</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.2.6 Оптимізація продуктивності додатків</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.2.7 Розробка кастомних віджетів і компонентів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLHEdXL6DpvP0m2dr55m1WIB6ZOAeUFq1x" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+<a class="btn btn-primary-material" href="https://www.zoho.com/crm/tutorials/" target="_blank">
+<i class="fas fa-link"></i> Zoho
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 8.3 ZOHO Analytics -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">8.3 ZOHO Analytics</td>
+</tr>
+<tr>
+<td class="skill-name">8.3.1 Основи роботи з Zoho Analytics</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLZQZebmrdF7iaAksXMRHUScNt0XocbtSv" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.2 Створення простих дашбордів та звітів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLZQZebmrdF7iaAksXMRHUScNt0XocbtSv" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.3 Імпорт даних з різних джерел</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLZQZebmrdF7iaAksXMRHUScNt0XocbtSv" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.4 Створення складних звітів та дашбордів з використаннямрізних джерел даних</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLZQZebmrdF7iaAksXMRHUScNt0XocbtSv" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.5 Налаштування розкладів оновлення даних</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLZQZebmrdF7iaAksXMRHUScNt0XocbtSv" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.6 Використання функцій аналітики та прогнозування</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLZQZebmrdF7iaAksXMRHUScNt0XocbtSv" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark partial"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.7 Налаштування та управління великими обсягами даних</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/playlist?list=PLZQZebmrdF7iaAksXMRHUScNt0XocbtSv" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.8 Інтеграція з зовнішніми системами</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.9 Розробка кастомних візуалізацій</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.3.10 Розробка спеціалізованих аналітичних модулів</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 8.4 ZOHO Flow -->
+<tr class="subsection-header">
+<td class="skill-name section-header" colspan="10" style="background-color:#303764;color:#fff;font-weight:bold;text-align:left;">8.4 ZOHO Flow</td>
+</tr>
+<tr>
+<td class="skill-name">8.4.1 Основи роботи з Zoho Flow</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/watch?v=n8w6HbxmUP4&amp;list=PLlC7sQNISSURBv8V21MpLc0cOSMo4556-" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.4.2 Створення простих інтеграцій між Zoho продуктами</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/watch?v=n8w6HbxmUP4&amp;list=PLlC7sQNISSURBv8V21MpLc0cOSMo4556-" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.4.3 Використання базових тригерів та дій</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/watch?v=n8w6HbxmUP4&amp;list=PLlC7sQNISSURBv8V21MpLc0cOSMo4556-" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.4.4 Використання складних умов і логіки для автоматизації процесів</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/watch?v=n8w6HbxmUP4&amp;list=PLlC7sQNISSURBv8V21MpLc0cOSMo4556-" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.4.5 Інтеграція з зовнішніми сервісами та API</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<tr>
+<td class="skill-name">8.4.6 Оптимізація інтеграційних процесів для забезпечення високоїпродуктивності</td>
+<td>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+<!-- 8.5 Розуміння роботи інших продуктів ZOHO -->
+<tr class="subsection-header">
+<td class="skill-name">8.5 Розуміння роботи інших продуктів ZOHO</td>
+<td>
+<a class="btn btn-primary-material" href="https://www.youtube.com/watch?v=whm-99ROU5k" target="_blank">
+<i class="fas fa-link"></i> YouTube
+</a>
+</td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-times-circle checkmark not-required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+<td><i class="fas fa-check-circle checkmark required"></i></td>
+</tr>
+</tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
